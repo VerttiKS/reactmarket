@@ -3,7 +3,7 @@ name: Branch Verification
 on:
   push:
     branches-ignore:
-      - "main"
+      - "mai"
 
 env:
   REGISTRY: ghcr.io
