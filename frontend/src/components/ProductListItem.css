@@ -8,6 +8,8 @@
   border-radius: 10px;
   width: 40em;
   margin-right: 10px;
+  word-wrap: break-word;
+  height: 20rem;
 }
 
 .product__list-item__image {
@@ -17,11 +19,12 @@
 }
 
 .product__list-item__section {
-  width: 80%;
+  max-width: 64%;
   display: block;
   flex-direction: column;
   padding: 10px;
   text-align: left;
+  word-wrap: break-word;
 }
 
 .product__list-item__section h1 {
@@ -57,15 +60,18 @@
   display: flex;
   padding: 15px;
   color: rgb(0, 0, 0);
+  word-wrap: break-word;
 }
 
 .displayBig {
   display: flex;
   padding: 15px;
+  word-wrap: break-word;
 }
 
 .descriptionDiv {
   padding-left: 15px;
   padding-right: 15px;
   text-align: left;
+  word-wrap: break-word;
 }

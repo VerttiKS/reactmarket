@@ -24,8 +24,8 @@ const Products = () => {
       }
 
       const data = await response.json();
-      console.log(data);
-      setProducts(data);
+      
+      setProducts(data.reverse());
     } catch (error) {
       setError(error.message);
       console.error('Error: ', error);

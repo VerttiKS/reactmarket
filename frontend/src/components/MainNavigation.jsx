@@ -28,19 +28,14 @@ const MainNavigation = () => {
                     {auth.isLoggedIn && (
                         <li className='li_nav_about'>
                             <Link to="/">
-                                <h3 onClick={auth.logout}>logout</h3>
+                                <img src={logoutImage} onClick={auth.logout}></img>
                             </Link>
                         </li>
                     )}
-                    <li className='li_nav_about'>
-                        <Link to="/auth">
-                            <img src={loginImage}></img>
-                        </Link>
-                    </li>
-                    {auth.isLoggedIn && (
+                    {!auth.isLoggedIn && (
                         <li className='li_nav_about'>
-                            <Link to="/users">
-                                <img src={groupImage}></img>
+                            <Link to="/auth">
+                                <img src={loginImage}></img>
                             </Link>
                         </li>
                     )}
@@ -55,13 +50,6 @@ const MainNavigation = () => {
                         <li className='li_nav_about'>
                             <Link to="/add">
                                 <img src={addImage}></img>
-                            </Link>
-                        </li>
-                    )}
-                    {auth.isLoggedIn && (
-                        <li className='li_nav_about'>
-                            <Link to="/cart">
-                                <img src={cartImage}></img>
                             </Link>
                         </li>
                     )}
