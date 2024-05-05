@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router'
 
 import Card from '../../shared/components/Card';
 import Button from "../../shared/components/Button";
 import Modal from "../../shared/components/Modal";
+import Input from "../../shared/components/Input";
 
 import './ItemsItem.css';
 import { AuthContext } from "../../shared/context/auth-context";
-import { deleteItem } from "../api/items";
+import { deleteItem, editItem } from "../api/items";
 
 const ItemsItem = props => {
   const auth = useContext(AuthContext);
@@ -15,6 +17,18 @@ const ItemsItem = props => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const showConfirmationHandler = () => setShowConfirmationModal(true);
   const cancelConfirmationHandler = () => setShowConfirmationModal(false);
+
+  const [showEditModal, setShowEditModal] = useState(false);
+  const showEditHandler = () => setShowEditModal(true);
+  const cancelEditHandler = () => setShowEditModal(false);
+
+  const navigate = useNavigate()
+
+  const titleRef = useRef();
+  const priceRef = useRef();
+  const descriptionRef = useRef();
+  const imageRef = useRef();
+
 
   const deleteItemMutation = useMutation({
     mutationFn: deleteItem,
@@ -34,9 +48,53 @@ const ItemsItem = props => {
     })
   }
 
+  const editItemMutation = useMutation({
+    mutationFn: editItem,
+    onSuccess: (data) => {
+      console.log(data);
+      navigate('/edit');
+    },
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  const editConfirmedHandler = async event => {
+    event.preventDefault();
+    editItemMutation.mutate({
+      id: props.id,
+      title: titleRef.current.value,
+      price: priceRef.current.value,
+      description: descriptionRef.current.value,
+      image: imageRef.current.value,
+      owner: auth.userName,
+      token: auth.token
+    })
+  };
 
   return(
   <>
+      <Modal
+      show={showEditModal}
+      header="Editing?"
+      footerClass="place-item__modal-actions"
+      footer={
+        <React.Fragment>
+              <form className="item-form" onSubmit={editConfirmedHandler}>
+                <Input id="title" ref={titleRef} type="text" label="Title" defaultValue={props.title}/>
+                <Input id="price" ref={priceRef} type="text" label="Price" defaultValue={props.price}/>
+                <Input id="description" ref={descriptionRef} type="text" label="Description" defaultValue={props.description}/>
+                <Input id="image" ref={imageRef} type="text" label="Image Link" defaultValue={props.image}/>
+                <Button type="submit">
+                  Edit Item
+                </Button>
+              </form>
+              <Button inverse onClick={cancelEditHandler}>Cancel</Button>
+        </React.Fragment>
+      }
+    >
+      <p>Do you want to edit?</p>
+    </Modal>
     <Modal
       show={showConfirmationModal}
       header="Are you sure?"
@@ -50,6 +108,7 @@ const ItemsItem = props => {
     >
       <p>Are you sure? Once it's gone, it's gone!</p>
     </Modal>
+    {auth.isLoggedIn && auth.userName == props.owner && (
     <li className="item-item">
       <Card className="item-item__content">
         <div className="item-item__image">
@@ -60,13 +119,17 @@ const ItemsItem = props => {
         </div>
         <div className="item-item_actions">
 
-          <Button>Edit</Button>
-          {auth.isLoggedIn && (
+        
+        
+            <Button edit onClick={showEditHandler}>Edit</Button>
+          
+   
             <Button danger onClick={showConfirmationHandler}>Delete</Button>
-          )}
+
         </div>
       </Card>
     </li>
+    )}
   </>
   )
 };

@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  #FRONTEND_IMAGE_NAME: tite-5g00ev16-3003/final-project-verttiks-frontend
+  FRONTEND_IMAGE_NAME: tite-5g00ev16-3003/final-project-verttiks-frontend
   BACKEND_IMAGE_NAME: tite-5g00ev16-3003/final-project-verttiks-backend
 
 jobs:
@@ -51,9 +51,9 @@ jobs:
 
       
       # Install frontend dependecies
-      #- name: Install the Node modules
-      #  working-directory: ./frontend
-      #  run: npm install
+      - name: Install the Node modules
+        working-directory: ./frontend
+        run: npm install
 
       #- name: Run the frontend tests
       #  working-directory: ./frontend
@@ -98,13 +98,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      #- name: Build Frontend Image
-      #  uses: docker/build-push-action@v5.0.0
-      #  with:
-      #    context: ./frontend
-      #    file: ./frontend/Dockerfile
-      #    push: false
-      #    tags: "${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}"
+      - name: Build Frontend Image
+        uses: docker/build-push-action@v5.0.0
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: false
+          tags: "${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}"
 
       - name: Build the Backend Image
         uses: docker/build-push-action@v5.0.0

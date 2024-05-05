@@ -27,7 +27,7 @@ const AddItem = () => {
       price: priceRef.current.value,
       description: descriptionRef.current.value,
       image: imageRef.current.value,
-      owner: "tempAccount",
+      owner: auth.userName,
       token: auth.token
     })
   };

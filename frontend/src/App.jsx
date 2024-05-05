@@ -11,7 +11,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import Home from './pages/Home.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import RootLayout from './pages/RootLayout.jsx';
-import Cart from './pages/Cart.jsx';
+import ItemDetails from './pages/ItemDetails.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Success from './pages/Success.jsx';
 import Authenticate from './users/pages/Authenticate.jsx';
@@ -32,12 +32,14 @@ function App() {
 
   const [cart, setCart] = useState([])
   const [token, setToken] = useState(false);
-  const [userId, setuser] = useState(false);
+  const [userId, setUserId] = useState(false);
+  const [userName, setUserName] = useState(false);
   const [tokenExpirationDate, setTokenExpirationDate] = useState(false);
 
-  const login = useCallback((uid, token, expirationDate) => {
+  const login = useCallback((uid, token, username, expirationDate) => {
     setToken(token);
-    setuser(uid);
+    setUserId(uid);
+    setUserName(username);
 
     //current date + 1h
     const tokenExpirationDate =
@@ -49,6 +51,7 @@ function App() {
       JSON.stringify({
         userId: uid,
         token,
+        userName: username,
         expiration: tokenExpirationDate.toISOString()
       })
     )
@@ -56,7 +59,8 @@ function App() {
 
   const logout = useCallback(() => {
     setToken(null);
-    setuser(null);
+    setUserId(null);
+    setUserName(null);
     setTokenExpirationDate(null);
     localStorage.removeItem('userData');
   }, []);
@@ -66,7 +70,7 @@ function App() {
     if (storedData && storedData.token &&
       new Date(storedData.expiration) > new Date() //if greater, the expiration is in the future
     ) {
-      login(storedData.userId, storedData.token, new Date(storedData.expiration));
+      login(storedData.userId, storedData.token, storedData.userName, new Date(storedData.expiration));
     }
   }, [login]);
 
@@ -85,7 +89,7 @@ function App() {
       <>
         <Routes>
           <Route path="/" element={<div className='default'><Home /></div>} />
-          <Route path="/cart" element={<div className='default'><Cart /></div>} />
+          <Route path= "/items/:id" element={<div className='default'><ItemDetails/></div>} />
           <Route path="/checkout" element={<div className='default_left'><Checkout /></div>} />
           <Route path="/success" element={<div className='default_left'><Success /></div>} />
           <Route path="/auth" element={<div className='default'><Authenticate /></div>} />
@@ -102,7 +106,7 @@ function App() {
         <Routes>
           <Route path="/" element={<div className='default'><Home /></div>} />
           <Route path="/auth" element={<div className='default'><Authenticate /></div>} />
-          <Route path="/cart" element={<div className='default'><Navigate to="/auth" /></div>} />
+          <Route path= "/items/:id" element={<div className='default'><ItemDetails/></div>} />
           <Route path="/checkout" element={<div className='default_left'><Navigate to="/auth" /></div>} />
           <Route path="/success" element={<div className='default_left'><Navigate to="/auth" /></div>} />
           <Route path="/users" element={<div className='default'><Navigate to="/auth" /></div>} />
@@ -120,6 +124,7 @@ function App() {
         isLoggedIn: !!token,
         token: token,
         userId: userId,
+        userName: userName,
         login: login,
         logout: logout
       }}

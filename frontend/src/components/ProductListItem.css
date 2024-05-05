@@ -11,12 +11,9 @@
 }
 
 .product__list-item__image {
-  width: 50%;
-  height: 100%;
-  max-width: 50%;
-  max-height: 100%;
-  margin: 15px;
-  border-radius: 5px;
+  object-fit:contain;
+  width: 230px;
+  height: 230px;
 }
 
 .product__list-item__section {
@@ -59,4 +56,16 @@
 .display {
   display: flex;
   padding: 15px;
+  color: rgb(0, 0, 0);
+}
+
+.displayBig {
+  display: flex;
+  padding: 15px;
+}
+
+.descriptionDiv {
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: left;
 }

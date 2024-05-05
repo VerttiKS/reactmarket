@@ -31,7 +31,7 @@ const Authenticate = props => {
             // Will execute only once, for the last mutation,
             // regardless which mutation resolves first
             console.log(data);
-            auth.login(data.id, data.token);
+            auth.login(data.id, data.token, data.name);
         },
         onError: (error) => {
             // An error happened!
@@ -45,7 +45,7 @@ const Authenticate = props => {
             // Will execute only once, for the last mutation,
             // regardless which mutation resolves first
             console.log(data);
-            auth.login(data.id, data.token);
+            auth.login(data.id, data.token, data.name);
         },
         onError: (error) => {
             // An error happened!
