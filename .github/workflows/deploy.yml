@@ -39,6 +39,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create production .env file from secret
+        run: echo "${{ secrets.PROD_ENV_FILE }}" > ./.env
+
       - name: Create backend production .env file from secret
         run: echo "${{ secrets.PROD_ENV_FILE }}" > ./backend/.env
 
