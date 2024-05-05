@@ -1,0 +1,31 @@
+.default {
+  align-items: flex-start; 
+  justify-content: center;
+  height: 100vh; 
+  position: absolute;
+  top: 10%;
+  width: 100%;
+
+  margin: 0 auto;
+  text-align: center;
+}
+
+.default_left {
+  align-items: flex-start; 
+  justify-content: center;
+  height: 100vh; 
+  position: absolute;
+  top: 10%;
+  width: 80%;
+  padding: 2em;
+
+  margin: 0 auto;
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

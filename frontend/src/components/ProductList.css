@@ -1,0 +1,31 @@
+.product__list {
+  padding: 20px;
+  border-radius: 16px;
+  margin:0 auto;
+  width: 80%;
+  color: black;
+  list-style-type: none;
+  display: block;
+}
+
+.store__title {
+  font-family: 'Brush Script MT';
+  font-size: 10em;
+  text-decoration: underline;
+  color: brown;
+  text-shadow:
+    0 0 7px rgb(248, 180, 180),
+    0 0 10px rgb(248, 180, 180),
+    0 0 21px rgb(248, 180, 180);
+  margin: 0;
+}
+
+.store__status {
+  font-size: 3em;
+  color: whitesmoke;
+  text-shadow:
+    0 0 7px black,
+    0 0 10px black,
+    0 0 21px black;
+  margin: 0;
+}
