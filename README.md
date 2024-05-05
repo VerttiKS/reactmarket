@@ -16,7 +16,7 @@ You should be able to reach the server in `http://localhost:5173/`. You can also
 
 Also make a .env file in every one of the folders
 ```
-MYSQL_HOST=db
+MYSQL_HOST=localhost
 MYSQL_USERNAME=root
 MYSQL_PASSWORD=market_password
 MYSQL_DATABASE=react_market
