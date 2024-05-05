@@ -55,10 +55,6 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
-      #- name: Run the frontend tests
-      #  working-directory: ./frontend
-      #  run: npm run test:ci
-
       - name: Install the backend deps
         working-directory: ./backend
         run: npm install

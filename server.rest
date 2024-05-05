@@ -1,10 +1,10 @@
-GET http://localhost:5000/api/items
+GET http://172.16.7.190:5000/api/items
 
 ###
-GET http://localhost:5000/api/items/1 
+GET http://172.16.7.190:5000/api/items/1 
 
 ###
-POST http://localhost:5000/api/items 
+POST http://172.16.7.190:5000/api/items 
 content-Type: application/json
 Authorization: BEARER {{authToken}}
 
@@ -17,7 +17,7 @@ Authorization: BEARER {{authToken}}
 }
 
 ###
-PUT http://localhost:5000/api/items
+PUT http://172.16.7.190:5000/api/items
 content-Type: application/json
 Authorization: BEARER {{authToken}}
 
@@ -32,12 +32,12 @@ Authorization: BEARER {{authToken}}
 
 
 ###
-DELETE http://localhost:5000/api/items/1
+DELETE http://172.16.7.190:5000/api/items/1
 Authorization: BEARER {{authToken}}
 
 
 ###
-POST http://localhost:5000/api/users/signup 
+POST http://172.16.7.190:5000/api/users/signup 
 Content-Type: application/json
 
 {
@@ -49,7 +49,7 @@ Content-Type: application/json
 
 ### 
 # @name login
-POST http://localhost:5000/api/users/login
+POST http://172.16.7.190:5000/api/users/login
 Content-Type: application/json
 
 {
