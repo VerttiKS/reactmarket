@@ -1,0 +1,57 @@
+.checkout__list {
+  background-color: rgb(233, 230, 226);
+  border-radius: 16px;
+  padding: 10px;
+  width: 40em;
+  color: black;
+  list-style-type: none;
+  display: block;
+  border: 3px solid rgb(0, 0, 0);
+}
+
+.checkout__list h2 {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0;
+  padding: 2px;
+}
+
+.submit__form {
+  background-color: rgb(233, 230, 226);
+  border-radius: 16px;
+  padding: 10px;
+  width: 40em;
+  color: black;
+  list-style-type: none;
+  display: block;
+  border: 3px solid rgb(0, 0, 0);
+}
+
+.submit__form input {
+  width: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.submit__form input[type=submit] {
+  width: 100%;
+  background-color: rgb(163, 148, 134);
+  color: rgb(0, 0, 0);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit__form input[type=submit]:hover {
+  background-color: rgb(138, 125, 114);
+}
+
+.submit__form h1 {
+  text-align: center;
+}
