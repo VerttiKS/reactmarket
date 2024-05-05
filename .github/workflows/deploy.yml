@@ -123,7 +123,7 @@ jobs:
           cp docker-compose.server.yml final-project_stack/docker-compose.yml
           mkdir -p final-project_stack/db
           cp db/init.prod.sql final-project_stack/db
-          echo "${{ secrets.PROD_ENV_FILE }}" > final-project_stack/.env
+          echo "${{ secrets.PROD_ENV_FILE_DB }}" > final-project_stack/.env
           echo "BACKEND_IMAGE=${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}" >> final-project_stack/.env
           echo "FRONTEND_IMAGE=${{ env.REGISTRY}}/${{ env.FRONTEND_IMAGE_NAME }}" >> final-project_stack/.env
           rsync -r final-project_stack "${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_SERVER }}:./"
