@@ -5,11 +5,25 @@ Web Programming - Final Project
 
 # Installation
 Clone the git and open up three terminals
+
 In the first terminal do a `docker-compose up -d`
+
 In the second terminal, go to the backend folder. Then `npm install` and `npm run dev`
+
 In the third termnail, go to the frontend folder. Then `npm install` and `npm run dev`
 
 You should be able to reach the server in `http://localhost:5173/`. You can also reach the backend with the rest files.
+
+Also make a .env file in every one of the folders
+```
+MYSQL_HOST=db
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=market_password
+MYSQL_DATABASE=react_market
+JWT_KEY=my_secret_market_key
+PORT=5000
+VITE_API_URL=http://localhost:5000
+```
 
 
 # Development summary
