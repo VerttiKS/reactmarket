@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext } from "react";
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router'
 
 import Card from '../../shared/components/Card';
 import Button from "../../shared/components/Button";
@@ -8,7 +9,7 @@ import Input from "../../shared/components/Input";
 
 import './ItemsItem.css';
 import { AuthContext } from "../../shared/context/auth-context";
-import { deleteItem } from "../api/items";
+import { deleteItem, editItem } from "../api/items";
 
 const ItemsItem = props => {
   const auth = useContext(AuthContext);
@@ -21,11 +22,12 @@ const ItemsItem = props => {
   const showEditHandler = () => setShowEditModal(true);
   const cancelEditHandler = () => setShowEditModal(false);
 
+  const navigate = useNavigate()
 
-  const titleRef = useRef(props.title);
-  const priceRef = useRef(props.price);
-  const descriptionRef = useRef(props.description);
-  const imageRef = useRef(props.image);
+  const titleRef = useRef();
+  const priceRef = useRef();
+  const descriptionRef = useRef();
+  const imageRef = useRef();
 
 
   const deleteItemMutation = useMutation({
@@ -47,17 +49,18 @@ const ItemsItem = props => {
   }
 
   const editItemMutation = useMutation({
-    mutationFn: deleteItem,
+    mutationFn: editItem,
     onSuccess: (data) => {
       console.log(data);
+      navigate('/edit');
     },
     onError: (error) => {
       console.log(error)
     }
   })
 
-  const editConfirmedHandler = () => {
-    setShowConfirmationModal(false);
+  const editConfirmedHandler = async event => {
+    event.preventDefault();
     editItemMutation.mutate({
       id: props.id,
       title: titleRef.current.value,
@@ -67,8 +70,7 @@ const ItemsItem = props => {
       owner: auth.userName,
       token: auth.token
     })
-  }
-
+  };
 
   return(
   <>
@@ -79,10 +81,10 @@ const ItemsItem = props => {
       footer={
         <React.Fragment>
               <form className="item-form" onSubmit={editConfirmedHandler}>
-                <Input id="title" ref={titleRef} type="text" label="Title" defaultValue="test" key="test"/>
-                <Input id="price" ref={priceRef} type="text" label="Price" />
-                <Input id="description" ref={descriptionRef} type="text" label="Description" />
-                <Input id="image" ref={imageRef} type="text" label="Image Link" />
+                <Input id="title" ref={titleRef} type="text" label="Title" defaultValue={props.title}/>
+                <Input id="price" ref={priceRef} type="text" label="Price" defaultValue={props.price}/>
+                <Input id="description" ref={descriptionRef} type="text" label="Description" defaultValue={props.description}/>
+                <Input id="image" ref={imageRef} type="text" label="Image Link" defaultValue={props.image}/>
                 <Button type="submit">
                   Edit Item
                 </Button>
@@ -106,7 +108,7 @@ const ItemsItem = props => {
     >
       <p>Are you sure? Once it's gone, it's gone!</p>
     </Modal>
-
+    {auth.isLoggedIn && auth.userName == props.owner && (
     <li className="item-item">
       <Card className="item-item__content">
         <div className="item-item__image">
@@ -118,15 +120,16 @@ const ItemsItem = props => {
         <div className="item-item_actions">
 
         
-        {auth.isLoggedIn && auth.userName == props.owner && (
+        
             <Button edit onClick={showEditHandler}>Edit</Button>
-          )}
-          {auth.isLoggedIn && auth.userName == props.owner && (
+          
+   
             <Button danger onClick={showConfirmationHandler}>Delete</Button>
-          )}
+
         </div>
       </Card>
     </li>
+    )}
   </>
   )
 };

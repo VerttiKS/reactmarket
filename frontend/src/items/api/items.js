@@ -28,7 +28,7 @@ export const createItem = async ({ title, price, description, image, owner, toke
     return await res.json();
 };
 
-export const editItem = async ({ title, price, description, image, owner, token }) => {
+export const editItem = async ({ id, title, price, description, image, owner, token }) => {
     const res = await fetch(
         `${import.meta.env.VITE_API_URL}/api/items`,
         {
@@ -39,6 +39,7 @@ export const editItem = async ({ title, price, description, image, owner, token 
                 Authorization: 'Bearer ' + token
             },
             body: JSON.stringify({
+                id,
                 title,
                 price,
                 description,
