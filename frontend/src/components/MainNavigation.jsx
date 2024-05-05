@@ -28,7 +28,7 @@ const MainNavigation = () => {
                     {auth.isLoggedIn && (
                         <li className='li_nav_about'>
                             <Link to="/">
-                                <img src={logoutImage} onClick={auth.logout}></img>
+                                <h3 onClick={auth.logout}>logout</h3>
                             </Link>
                         </li>
                     )}
