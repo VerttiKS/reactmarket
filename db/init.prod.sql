@@ -13,10 +13,10 @@ INSERT INTO `items` (`title`, `price`, `description`, `image`, `owner`) VALUES (
 INSERT INTO `items` (`title`, `price`, `description`, `image`, `owner`) VALUES ('Mana Potion', '12.99', 'This potion will fully restore your mana!', 'https://cdn.pixabay.com/photo/2024/03/12/18/13/bottle-8629309_960_720.png', 'LoremAlchemist');
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `hashed_password` varchar(255) NOT NULL,
+  `id` varchar(36) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `hashed_password` varchar(60) NOT NULL,
   `admin` boolean NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
