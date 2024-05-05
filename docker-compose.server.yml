@@ -1,14 +1,14 @@
 version: '3.1'
 services:
   backend:
-    image: backend
+    image: ${BACKEND_IMAGE}
     ports:
       - "5000:5000"
     env_file:
       - .env
     restart: always
   frontend: 
-    image: frontend
+    image: ${FRONTEND_IMAGE}
     ports:
       - "80:80"
     env_file:
