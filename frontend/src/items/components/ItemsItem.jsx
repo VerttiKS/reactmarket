@@ -39,9 +39,9 @@ const ItemsItem = props => {
     }
   })
 
-  const deleteConfirmedHandler = () => {
+  const deleteConfirmedHandler = async event => {
     setShowConfirmationModal(false);
-    deleteItemMutation.mutate({
+    await deleteItemMutation.mutate({
       id: props.id,
       token: auth.token
     })
@@ -109,14 +109,14 @@ const ItemsItem = props => {
       <p>Are you sure? Once it's gone, it's gone!</p>
     </Modal>
     {auth.isLoggedIn && auth.userName == props.owner && (
-    <li className="product__list-item">
-      <div className="display">
-        <img className="product__list-item__image" src={props.image}></img>
-        <section className='product__list-item__section'>
+    <li className="productItem__list-item">
+      <div className="productDisplay">
+        <img className="productItem__list-item__image" src={props.image}></img>
+        <section className='productItem__list-item__section'>
           <h2>{props.title}</h2>
         </section>
       </div>
-      <div className="displayButton">
+      <div className="productDisplayButton">
             <Button edit onClick={showEditHandler}>Edit</Button>
           
    

@@ -1,5 +1,6 @@
 import React, { useRef, useContext } from "react";
 import { useMutation } from "react-query";
+import { useNavigate } from 'react-router'
 
 import Input from "../../shared/components/Input";
 import Button from "../../shared/components/Button";
@@ -16,8 +17,17 @@ const AddItem = () => {
 
   const auth = useContext(AuthContext);
 
+  const navigate = useNavigate()
+
   const createItemMutation = useMutation({
-    mutationFn: createItem
+    mutationFn: createItem,
+    onSuccess: (data) => {
+      console.log(data);
+      navigate("/");
+    },
+    onError: (error) => {
+      console.log(error)
+    }
   });
 
   const itemSubmitHandler = async event => {
@@ -35,7 +45,7 @@ const AddItem = () => {
   return (
     <form className="item-form" onSubmit={itemSubmitHandler}>
       <Input id="title" ref={titleRef} type="text" label="Title" />
-      <Input id="price" ref={priceRef} type="text" label="Price" />
+      <Input id="price" ref={priceRef} type="text" label="Price (cents required 100.00)" />
       <Input id="description" ref={descriptionRef} type="text" label="Description" />
       <Input id="image" ref={imageRef} type="text" label="Image Link" />
       <Button type="submit">

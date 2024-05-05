@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext } from "react";
 import { useMutation } from "react-query";
+import { useNavigate } from 'react-router'
 
 import Card from "../../shared/components/Card";
 import Input from "../../shared/components/Input";
@@ -12,6 +13,8 @@ import './Authenticate.css';
 const Authenticate = props => {
 
     const auth = useContext(AuthContext);
+
+    const navigate = useNavigate()
 
     const nameRef = useRef();
     const emailRef = useRef();
@@ -30,8 +33,8 @@ const Authenticate = props => {
         onSuccess: (data) => {
             // Will execute only once, for the last mutation,
             // regardless which mutation resolves first
-            console.log(data);
             auth.login(data.id, data.token, data.name);
+            navigate("/");
         },
         onError: (error) => {
             // An error happened!
@@ -44,8 +47,8 @@ const Authenticate = props => {
         onSuccess: (data) => {
             // Will execute only once, for the last mutation,
             // regardless which mutation resolves first
-            console.log(data);
             auth.login(data.id, data.token, data.name);
+            navigate("/");
         },
         onError: (error) => {
             // An error happened!

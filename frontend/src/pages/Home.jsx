@@ -40,14 +40,14 @@ const Products = () => {
 
 
   //display content based on the outcome of fetchProducts
-  let content = <p className='store__status'>No menu found</p>;
+  let content = <p className='store__status'>No items found</p>;
 
   if (error) {
     content = <p className='store__status'>{error}</p>;
   }
 
   if (isLoading) {
-    content = <p className='store__status'>Fetching menu... </p>;
+    content = <p className='store__status'>Fetching items... </p>;
   }
 
   if (products.length > 0) {
@@ -56,7 +56,7 @@ const Products = () => {
 
   return (
     <>
-      <h1 className='store__title'>React Market</h1>
+      <h1 className='store__title'>ReactMarket</h1>
       <ul className="product__list">
         {content}
       </ul>

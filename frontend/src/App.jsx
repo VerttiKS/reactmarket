@@ -12,8 +12,6 @@ import Home from './pages/Home.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import RootLayout from './pages/RootLayout.jsx';
 import ItemDetails from './pages/ItemDetails.jsx';
-import Checkout from './pages/Checkout.jsx';
-import Success from './pages/Success.jsx';
 import Authenticate from './users/pages/Authenticate.jsx';
 import MainNavigation from './components/MainNavigation.jsx';
 import Users from './users/pages/Users.jsx';
@@ -90,8 +88,6 @@ function App() {
         <Routes>
           <Route path="/" element={<div className='default'><Home /></div>} />
           <Route path= "/items/:id" element={<div className='default'><ItemDetails/></div>} />
-          <Route path="/checkout" element={<div className='default_left'><Checkout /></div>} />
-          <Route path="/success" element={<div className='default_left'><Success /></div>} />
           <Route path="/auth" element={<div className='default'><Authenticate /></div>} />
           <Route path="/users" element={<div className='default'><Users /></div>} />
           <Route path="/edit" element={<div className='default'><Items /></div>} />
@@ -107,8 +103,6 @@ function App() {
           <Route path="/" element={<div className='default'><Home /></div>} />
           <Route path="/auth" element={<div className='default'><Authenticate /></div>} />
           <Route path= "/items/:id" element={<div className='default'><ItemDetails/></div>} />
-          <Route path="/checkout" element={<div className='default_left'><Navigate to="/auth" /></div>} />
-          <Route path="/success" element={<div className='default_left'><Navigate to="/auth" /></div>} />
           <Route path="/users" element={<div className='default'><Navigate to="/auth" /></div>} />
           <Route path="/edit" element={<div className='default'><Navigate to="/auth" /></div>} />
           <Route path="/add" element={<div className='default'><Navigate to="/auth" /></div>} />
