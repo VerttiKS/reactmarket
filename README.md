@@ -2,6 +2,24 @@
 # Final Project
 Web Programming - Final Project
 
+
+# Installation
+Clone the git and open up three terminals
+In the first terminal do a `docker-compose up -d`
+In the second terminal, go to the backend folder. Then `npm install` and `npm run dev`
+In the third termnail, go to the frontend folder. Then `npm install` and `npm run dev`
+
+You should be able to reach the server in `http://localhost:5173/`. You can also reach the backend with the rest files.
+
+
+# Development summary
+The development was completed using the same methods as the course taught us. React frontend and Node + SQL database backend 
+
+The biggest roadblock that I faced was the deployment. The env file needed a `MYSQL_HOST = db`. It took me way too long to figure it out, but I finally did in the end.
+
+I created the website in a similar style as ReactDine, because I really love the style of it. I really like the brick texture. It's comfortable
+
+
 # Website tour
 When first entering the site, you can see the homepage full of people selling
 ![kuva](https://github.com/TiTe-5G00EV16-3003/2024-final-project-VerttiKS/assets/122641331/7928eb91-9af0-4c2e-bf15-195b4cd8ac10)
@@ -29,7 +47,6 @@ In the second button we can edit or remove an item
 ![kuva](https://github.com/TiTe-5G00EV16-3003/2024-final-project-VerttiKS/assets/122641331/8a8f2883-9e46-4690-9f2e-895b61bb94a2)
 
 Third button logs us out
-![kuva](https://github.com/TiTe-5G00EV16-3003/2024-final-project-VerttiKS/assets/122641331/a500e9a3-8aac-4391-b9d5-6a65cd7e916a)
 
 ![kuva](https://github.com/TiTe-5G00EV16-3003/2024-final-project-VerttiKS/assets/122641331/39807daa-3bb7-402d-9940-1fa7f9f7db2b)
 
