@@ -4,18 +4,20 @@ const Joi = require('joi');  //Load the module which is a class
 
 // Define the schema of the object
 const itemInsertSchema = Joi.object({
-  name: Joi.string().min(2).required(),
+  title: Joi.string().min(2).required(),
   price: Joi.string().min(4).required(),
   description: Joi.string().min(2).required(),
-  image: Joi.string().min(2).required()
+  image: Joi.string().min(2).required(),
+  owner: Joi.string().min(2).required()
 });
 
 const itemUpdateSchema = Joi.object({
   id: Joi.number().required().integer(),
-  name: Joi.string().min(2).required(),
+  title: Joi.string().min(2).required(),
   price: Joi.string().min(4).required(),
   description: Joi.string().min(2).required(),
-  image: Joi.string().min(2).required()
+  image: Joi.string().min(2).required(),
+  owner: Joi.string().min(2).required()
 });
 
 const getItems = async (req, res) => {
@@ -52,17 +54,18 @@ const createItem = async (req, res) => {
   }
 
   const item = {
-    name: req.body.name,
+    title: req.body.title,
     price: req.body.price,
     description: req.body.description,
-    image: req.body.image
+    image: req.body.image,
+    owner: req.body.owner
   }
 
   
   try {
     const result = await items.findByItem(item);
     if (result.length > 0) {
-      res.status(400).send('Item exist');
+      res.status(400).send('Item exists');
       return;
     }
 
@@ -91,10 +94,11 @@ const updateItem = async (req, res) => {
 
     const item = {
       id: req.body.id,
-      name: req.body.name,
+      title: req.body.title,
       price: req.body.price,
       description: req.body.description,
-      image: req.body.image
+      image: req.body.image,
+      owner: req.body.owner
     };
 
     const result = await items.findItemById(item.id);

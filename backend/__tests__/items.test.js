@@ -37,7 +37,7 @@ describe('GET item by id endpoint', () => {
     expect(response.body).toEqual(
       expect.objectContaining({
         id: 1,
-        name: 'Mac & Cheese',
+        title: "Health Potion",
         price: "8.99",
       }),
     );
@@ -84,10 +84,11 @@ describe('POST item endpoint', () => {
 
   test('should create a new item', async () => {
     const item = {
-      name: 'Test food',
+      title: 'Test item',
       price: '9000.00',
       description: 'Testscription haha',
       image: 'Testimage',
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -100,7 +101,7 @@ describe('POST item endpoint', () => {
     expect(response.status).toEqual(201);
     expect(response.headers['content-type']).toMatch(/json/);
     expect(response.body.id).toBeTruthy();
-    expect(response.body.name).toEqual('Test food');
+    expect(response.body.title).toEqual('Test item');
     expect(response.body.price).toEqual('9000.00');
   });
 
@@ -117,9 +118,9 @@ describe('POST item endpoint', () => {
     expect(response.status).toEqual(400);
   });
 
-  test('should not allow only name', async () => {
+  test('should not allow only title', async () => {
     const item = {
-      name: 'Test food',
+      title: 'Test title',
     };
     const response = await request(app)
       .post('/api/items')
@@ -133,12 +134,13 @@ describe('POST item endpoint', () => {
 
 
 
-  test('should not allow empty name', async () => {
+  test('should not allow empty title', async () => {
     const item = {
-      name: '',
+      title: '',
       price: '9000.00',
       description: 'Testscription haha',
       image: 'Testimage',
+      owner: 'tester'
     };
     const response = await request(app)
       .post('/api/items')
@@ -146,15 +148,16 @@ describe('POST item endpoint', () => {
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .send(item);
     expect(response.status).toEqual(400);
-    expect(response.text).toContain('{\"message\":\"\\\"name\\\" is not allowed to be empty\"}');
+    expect(response.text).toContain('{\"message\":\"\\\"title\\\" is not allowed to be empty\"}');
   });
 
   test('should not allow empty price', async () => {
     const item = {
-      name: 'Test food',
+      title: 'Test food',
       price: '',
       description: 'Testscription haha',
       image: 'Testimage',
+      owner: 'tester'
     };
     const response = await request(app)
       .post('/api/items')
@@ -166,12 +169,13 @@ describe('POST item endpoint', () => {
   });
 
 
-  test('should not allow too short name', async () => {
+  test('should not allow too short title', async () => {
     const item = {
-      name: 'T',
+      title: 'T',
       price: '9000.00',
       description: 'Testscription haha',
       image: 'Testimage',
+      owner: 'tester'
     };
     const response = await request(app)
       .post('/api/items')
@@ -179,15 +183,16 @@ describe('POST item endpoint', () => {
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .send(item);
     expect(response.status).toEqual(400);
-    expect(response.text).toContain('{\"message\":\"\\\"name\\\" length must be at least 2 characters long\"}');
+    expect(response.text).toContain('{\"message\":\"\\\"title\\\" length must be at least 2 characters long\"}');
   });
 
   test('should not allow too short price', async () => {
     const item = {
-      name: 'Test food',
+      title: 'Test food',
       price: '9.0',
       description: 'Testscription haha',
       image: 'Testimage',
+      owner: 'tester'
     };
     const response = await request(app)
       .post('/api/items')
@@ -202,24 +207,26 @@ describe('POST item endpoint', () => {
 
   test('should not allow a duplicate item', async () => {
     const item = {
-      name: 'Test food',
-      price: '9000.00',
-      description: 'Testscription haha',
-      image: 'Testimage',
+      title: 'Mana Potion',
+      price: '12.99',
+      description: 'This potion will fully restore your mana!',
+      image: 'https://cdn.pixabay.com/photo/2024/03/12/18/13/bottle-8629309_960_720.png',
+      owner: 'LoremAlchemist'
     };
+    
     const response = await request(app)
       .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .send(item);
     expect(response.status).toEqual(400);
-    expect(response.text).toContain('Item exist');
+    expect(response.text).toContain('Item exists');
   });
 
 
   const connection = require('../db/pool');
   afterAll(async () => {
-    const deleteQuery = `DELETE FROM items WHERE name LIKE '%Test%';`;
+    const deleteQuery = `DELETE FROM items WHERE title LIKE '%Test%';`;
     await connection.query(deleteQuery)
       .then(([rows]) => {
         console.log("Response: ", rows);
@@ -261,11 +268,12 @@ describe('PUT items endpoint', () => {
 
   test('should update an existing item', async () => {
     const item = {
-      id: 3,
-      name: "souuup",
+      id: 1,
+      title: "souuup",
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -277,18 +285,19 @@ describe('PUT items endpoint', () => {
 
     expect(response.status).toEqual(200);
     expect(response.headers['content-type']).toMatch(/json/);
-    expect(response.body.id).toEqual(3);
-    expect(response.body.name).toEqual('souuup');
+    expect(response.body.id).toEqual(1);
+    expect(response.body.title).toEqual('souuup');
     expect(response.body.description).toEqual('Testscription haha');
   });
 
   test('should not update a item that doesnt exist', async () => {
     const item = {
       id: 1003,
-      name: "souuup",
+      title: "souuup",
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -305,10 +314,11 @@ describe('PUT items endpoint', () => {
   test('should fail with string id', async () => {
     const item = {
       id: "One",
-      name: "souuup",
+      title: "souuup",
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -325,10 +335,11 @@ describe('PUT items endpoint', () => {
   test('should fail if id not an integer', async () => {
     const item = {
       id: 101.2,
-      name: "souuup",
+      title: "souuup",
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -344,10 +355,11 @@ describe('PUT items endpoint', () => {
 
   test('should fail if id not an integer', async () => {
     const item = {
-      name: "souuup",
+      title: "souuup",
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -361,13 +373,14 @@ describe('PUT items endpoint', () => {
     expect(response.body).toEqual({ "message": "\"id\" is required" });
   });
 
-  test('should fail if with empty name', async () => {
+  test('should fail if with empty title', async () => {
     const item = {
       id: 3,
-      name: "",
+      title: "",
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -378,15 +391,16 @@ describe('PUT items endpoint', () => {
       .send(item);
 
     expect(response.status).toEqual(400);
-    expect(response.body).toEqual({ "message": "\"name\" is not allowed to be empty" });
+    expect(response.body).toEqual({ "message": "\"title\" is not allowed to be empty" });
   });
 
-  test('should fail if no name', async () => {
+  test('should fail if no title', async () => {
     const item = {
       id: 3,
       price: "3.99",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -397,16 +411,17 @@ describe('PUT items endpoint', () => {
       .send(item);
 
     expect(response.status).toEqual(400);
-    expect(response.body).toEqual({ "message": "\"name\" is required" });
+    expect(response.body).toEqual({ "message": "\"title\" is required" });
   });
 
   test('should fail if with empty price', async () => {
     const item = {
       id: 3,
-      name: "souuup",
+      title: "souuup",
       price: "",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -423,9 +438,10 @@ describe('PUT items endpoint', () => {
   test('should fail if no price', async () => {
     const item = {
       id: 3,
-      name: "souuup",
+      title: "souuup",
       description: "Testscription haha",
-      image: "Testimage"
+      image: "Testimage",
+      owner: 'tester'
     };
 
     const response = await request(app)
@@ -471,10 +487,11 @@ describe('DELETE items endpoint', () => {
 
   test('should delete the item by id', async () => {
     const item = {
-      name: 'Test foods',
+      title: 'Test foods',
       price: '999.00',
       description: 'Testscription hahas',
       image: 'Testimages',
+      owner: 'tester'
     };
     const postResponse = await request(app)
       .post('/api/items')

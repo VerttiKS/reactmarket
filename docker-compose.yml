@@ -5,8 +5,8 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: diner_password
-      MYSQL_DATABASE: 'react_diner'
+      MYSQL_ROOT_PASSWORD: market_password
+      MYSQL_DATABASE: 'react_market'
     ports:
       - '3306:3306'
     volumes:

@@ -42,10 +42,10 @@ const items = {
 
 
   updateItemById: async (item) => {
-    const updateQuery = 'UPDATE `items` SET `name` = ?, `price` = ?, `description` = ?, `image` = ? WHERE `id` = ?';
+    const updateQuery = 'UPDATE `items` SET `title` = ?, `price` = ?, `description` = ?, `image` = ?, `owner` = ? WHERE `id` = ?';
     try {
       const connection = await pool.getConnection();
-      const [results] = await connection.query(updateQuery, [item.name, item.price, item.description, item.image, item.id]);
+      const [results] = await connection.query(updateQuery, [item.title, item.price, item.description, item.image, item.owner, item.id]);
       connection.release();
       console.log(results);
       return results
@@ -59,7 +59,7 @@ const items = {
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(
-        'SELECT * FROM `items` WHERE name=? AND price=?', [item.name, item.price]
+        'SELECT * FROM `items` WHERE title=? AND owner=?', [item.title, item.owner]
       );
       connection.release();
       return results;
