@@ -72,6 +72,7 @@ const signUpUser = async (req, res) => {
     res.status(201).json({
       id: newUser.id,
       email: newUser.email,
+      name: newUser.name,
       token: token
     })
   } catch (err) {
@@ -130,6 +131,7 @@ const loginUser = async (req, res) => {
   res.status(201).json({
     id: identifiedUser.id,
     email: identifiedUser.email,
+    name: identifiedUser.name,
     token: token
   })
 }
