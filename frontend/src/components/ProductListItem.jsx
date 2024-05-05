@@ -2,7 +2,7 @@ import './ProductListItem.css';
 import { Context } from '../App.jsx';
 import { useContext } from 'react';
 
-const ProductListItem = ({ id, title, desc, image, price }) => {
+const ProductListItem = ({ id, title, desc, image, price, owner }) => {
 
   const [cart, setCart] = useContext(Context);
 
@@ -36,6 +36,7 @@ const ProductListItem = ({ id, title, desc, image, price }) => {
         <img className="product__list-item__image" src={image}></img>
         <section className='product__list-item__section'>
           <h2>{title}</h2>
+          <h4>seller: {owner}</h4>
           <p>{desc}</p>
           <h1>{price}€</h1>
           <button onClick={AddToCart}>add to cart</button>

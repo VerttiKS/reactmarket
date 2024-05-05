@@ -5,19 +5,19 @@ import Card from '../../shared/components/Card';
 import Button from "../../shared/components/Button";
 import Modal from "../../shared/components/Modal";
 
-import './MenuitemsItem.css';
+import './ItemsItem.css';
 import { AuthContext } from "../../shared/context/auth-context";
-import { deleteMenuitem } from "../api/menuitems";
+import { deleteItem } from "../api/items";
 
-const MenuitemsItem = props => {
+const ItemsItem = props => {
   const auth = useContext(AuthContext);
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const showConfirmationHandler = () => setShowConfirmationModal(true);
   const cancelConfirmationHandler = () => setShowConfirmationModal(false);
 
-  const deleteMenuitemMutation = useMutation({
-    mutationFn: deleteMenuitem,
+  const deleteItemMutation = useMutation({
+    mutationFn: deleteItem,
     onSuccess: (data) => {
       console.log(data);
     },
@@ -28,8 +28,7 @@ const MenuitemsItem = props => {
 
   const deleteConfirmedHandler = () => {
     setShowConfirmationModal(false);
-    console.log("Do we get here?");
-    deleteMenuitemMutation.mutate({
+    deleteItemMutation.mutate({
       id: props.id,
       token: auth.token
     })
@@ -51,15 +50,15 @@ const MenuitemsItem = props => {
     >
       <p>Are you sure? Once it's gone, it's gone!</p>
     </Modal>
-    <li className="menuitem-item">
-      <Card className="menuitem-item__content">
-        <div className="menuitem-item__image">
-          <img src={props.image} alt={props.name} />
+    <li className="item-item">
+      <Card className="item-item__content">
+        <div className="item-item__image">
+          <img src={props.image} alt={props.title} />
         </div>
-        <div className="menuitem-item__info">
-          <h3>{props.name} - {props.price}</h3>
+        <div className="item-item__info">
+          <h3>{props.title} - {props.price}</h3>
         </div>
-        <div className="menuitem-item_actions">
+        <div className="item-item_actions">
 
           <Button>Edit</Button>
           {auth.isLoggedIn && (
@@ -72,4 +71,4 @@ const MenuitemsItem = props => {
   )
 };
 
-export default MenuitemsItem;
+export default ItemsItem;

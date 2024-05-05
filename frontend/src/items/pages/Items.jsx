@@ -2,15 +2,15 @@
 import React from "react";
 import { useQuery } from 'react-query'
 
-import MenuitemsList from '../components/MenuitemsList';
+import ItemsList from '../components/ItemsList';
 import LoadingSpinner from "../../shared/components/LoadingSpinner";
-import { getMenuitems } from "../api/menuitems";
+import { getItems } from "../api/items";
 
-const Menuitems = () => {
+const Items = () => {
 
 
-    const { isLoading, error, data } = useQuery("menuitemsData", () =>
-        getMenuitems()
+    const { isLoading, error, data } = useQuery("itemsData", () =>
+        getItems()
     );
 
 
@@ -23,8 +23,8 @@ const Menuitems = () => {
     if (error) return "An error has occurred: " + error.message;
 
     return (
-        <MenuitemsList items={data} />
+        <ItemsList items={data} />
     )
 };
 
-export default Menuitems;
+export default Items;

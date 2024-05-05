@@ -25,7 +25,7 @@ const Checkout = () => {
       setError(null)
       setIsLoading(true);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menuitems`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/items`);
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }

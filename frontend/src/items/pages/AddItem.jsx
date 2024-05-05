@@ -3,45 +3,46 @@ import { useMutation } from "react-query";
 
 import Input from "../../shared/components/Input";
 import Button from "../../shared/components/Button";
-import { createMenuitem } from "../api/menuitems";
+import { createItem } from "../api/items";
 import { AuthContext } from "../../shared/context/auth-context";
 
-import './AddMenuitem.css';
+import './AddItem.css';
 
-const AddMenuitem = () => {
-  const nameRef = useRef();
+const AddItem = () => {
+  const titleRef = useRef();
   const priceRef = useRef();
   const descriptionRef = useRef();
   const imageRef = useRef();
 
   const auth = useContext(AuthContext);
 
-  const createMenuitemMutation = useMutation({
-    mutationFn: createMenuitem
+  const createItemMutation = useMutation({
+    mutationFn: createItem
   });
 
-  const menuitemSubmitHandler = async event => {
+  const itemSubmitHandler = async event => {
     event.preventDefault();
-    createMenuitemMutation.mutate({
-      name: nameRef.current.value,
+    createItemMutation.mutate({
+      title: titleRef.current.value,
       price: priceRef.current.value,
       description: descriptionRef.current.value,
       image: imageRef.current.value,
+      owner: "tempAccount",
       token: auth.token
     })
   };
 
   return (
-    <form className="menuitem-form" onSubmit={menuitemSubmitHandler}>
-      <Input id="name" ref={nameRef} type="text" label="Name" />
+    <form className="item-form" onSubmit={itemSubmitHandler}>
+      <Input id="title" ref={titleRef} type="text" label="Title" />
       <Input id="price" ref={priceRef} type="text" label="Price" />
       <Input id="description" ref={descriptionRef} type="text" label="Description" />
       <Input id="image" ref={imageRef} type="text" label="Image Link" />
       <Button type="submit">
-        Add Menuitem
+        Add Item
       </Button>
     </form>
   )
 };
 
-export default AddMenuitem;
+export default AddItem;

@@ -17,8 +17,8 @@ import Success from './pages/Success.jsx';
 import Authenticate from './users/pages/Authenticate.jsx';
 import MainNavigation from './components/MainNavigation.jsx';
 import Users from './users/pages/Users.jsx';
-import Menuitems from './menuitems/pages/Menuitems.jsx'
-import AddMenuitem from './menuitems/pages/AddMenuitem.jsx'
+import Items from './items/pages/Items.jsx'
+import AddItem from './items/pages/AddItem.jsx'
 
 import { AuthContext } from './shared/context/auth-context.js';
 
@@ -90,8 +90,8 @@ function App() {
           <Route path="/success" element={<div className='default_left'><Success /></div>} />
           <Route path="/auth" element={<div className='default'><Authenticate /></div>} />
           <Route path="/users" element={<div className='default'><Users /></div>} />
-          <Route path="/edit" element={<div className='default'><Menuitems /></div>} />
-          <Route path="/add" element={<div className='default'><AddMenuitem /></div>} />
+          <Route path="/edit" element={<div className='default'><Items /></div>} />
+          <Route path="/add" element={<div className='default'><AddItem /></div>} />
         </Routes>
 
       </>

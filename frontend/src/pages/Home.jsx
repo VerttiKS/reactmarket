@@ -16,9 +16,9 @@ const Products = () => {
       setError(null)
       setIsLoading(true);
 
-      console.log(`${import.meta.env.VITE_API_URL}/api/menuitems`);
+      console.log(`${import.meta.env.VITE_API_URL}/api/items`);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/menuitems`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/items`);
       if (!response.ok) {
         throw new Error('Something went wrong!');
       }
@@ -56,7 +56,7 @@ const Products = () => {
 
   return (
     <>
-      <h1 className='store__title'>React Dine</h1>
+      <h1 className='store__title'>React Market</h1>
       <ul className="product__list">
         {content}
       </ul>

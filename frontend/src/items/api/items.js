@@ -1,13 +1,13 @@
-export const getMenuitems = async () => {
+export const getItems = async () => {
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/menuitems`
+        `${import.meta.env.VITE_API_URL}/api/items`
     );
     return await res.json();
 };
 
-export const createMenuitem = async ({ name, price, description, image, token }) => {
+export const createItem = async ({ title, price, description, image, owner, token }) => {
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/menuitems`,
+        `${import.meta.env.VITE_API_URL}/api/items`,
         {
             method: 'POST',
             headers: {
@@ -16,10 +16,11 @@ export const createMenuitem = async ({ name, price, description, image, token })
                 Authorization: 'Bearer ' + token
             },
             body: JSON.stringify({
-                name,
+                title,
                 price,
                 description,
-                image
+                image,
+                owner
             })
         }
     );
@@ -28,9 +29,9 @@ export const createMenuitem = async ({ name, price, description, image, token })
 };
 
 
-export const deleteMenuitem = async ({ id, token }) => {
+export const deleteItem = async ({ id, token }) => {
     const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/menuitems/` + id,
+        `${import.meta.env.VITE_API_URL}/api/items/` + id,
         {
             method: 'DELETE',
             headers: {
