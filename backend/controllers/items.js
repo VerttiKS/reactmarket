@@ -1,5 +1,5 @@
 // require the model
-const menuitems = require('../models/menuitems');
+const items = require('../models/items');
 const Joi = require('joi');  //Load the module which is a class
 
 // Define the schema of the object
@@ -18,17 +18,17 @@ const itemUpdateSchema = Joi.object({
   image: Joi.string().min(2).required()
 });
 
-const getMenuItems = async (req, res) => {
-  const response = await menuitems.findMenuItems();
+const getItems = async (req, res) => {
+  const response = await items.findItems();
   if (response) {
     res.json(response);
   }
 };
 
-const getMenuItemById = async (req, res) => {
+const getItemById = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
-    const response = await menuitems.findMenuItemById(id);
+    const response = await items.findItemById(id);
     if (response) {
       res.send(response);
     }
@@ -40,7 +40,7 @@ const getMenuItemById = async (req, res) => {
   }
 };
 
-const createMenuItem = async (req, res) => {
+const createItem = async (req, res) => {
 
   // Validate the req.body against the schema
   // Validate returns an error object if there are validation errors
@@ -51,7 +51,7 @@ const createMenuItem = async (req, res) => {
     return;
   }
 
-  const menuitem = {
+  const item = {
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
@@ -60,16 +60,16 @@ const createMenuItem = async (req, res) => {
 
   
   try {
-    const result = await menuitems.findByMenuItem(menuitem);
+    const result = await items.findByItem(item);
     if (result.length > 0) {
-      res.status(400).send('MenuItem exist');
+      res.status(400).send('Item exist');
       return;
     }
 
-    const response = await menuitems.createNewMenuItem(menuitem);
+    const response = await items.createNewItem(item);
     if (response) {
-      menuitem.id = response.insertId;
-      res.status(201).json(menuitem);
+      item.id = response.insertId;
+      res.status(201).json(item);
     }
   } catch (err) {
     console.log(err);
@@ -77,7 +77,7 @@ const createMenuItem = async (req, res) => {
   }
 };
 
-const updateMenuItem = async (req, res) => {
+const updateItem = async (req, res) => {
 
   try{
     // Validate the req.body against the schema
@@ -89,7 +89,7 @@ const updateMenuItem = async (req, res) => {
       return;
     }
 
-    const menuitem = {
+    const item = {
       id: req.body.id,
       name: req.body.name,
       price: req.body.price,
@@ -97,15 +97,15 @@ const updateMenuItem = async (req, res) => {
       image: req.body.image
     };
 
-    const result = await menuitems.findMenuItemById(menuitem.id);
+    const result = await items.findItemById(item.id);
     if (result == null) {
       res.status(404).send('Not Found');
       return;
     }
 
-    const response = await menuitems.updateMenuItemById(menuitem);
+    const response = await items.updateItemById(item);
     if (response) {
-      res.json(menuitem);
+      res.json(item);
     }
 
   } catch (error){
@@ -113,20 +113,20 @@ const updateMenuItem = async (req, res) => {
   }
 };
 
-const deleteMenuItem = async (req, res) => {
+const deleteItem = async (req, res) => {
   const id = parseInt(req.params.id, 10);
   
   try {
-    const result = await menuitems.findMenuItemById(id);
+    const result = await items.findItemById(id);
     if (result == null) {
       res.status(404).send('Not Found');
       return;
     }
 
     
-    const response = await menuitems.deleteMenuItemById(id);
+    const response = await items.deleteItemById(id);
     if(response) {
-      res.status(200).send("MenuItem deleted");
+      res.status(200).send("Item deleted");
     }
 
   } catch (err) {
@@ -136,9 +136,9 @@ const deleteMenuItem = async (req, res) => {
 
 // export named functions
 module.exports = {
-  createMenuItem,
-  deleteMenuItem,
-  getMenuItems,
-  getMenuItemById,
-  updateMenuItem
+  createItem,
+  deleteItem,
+  getItems,
+  getItemById,
+  updateItem
 };

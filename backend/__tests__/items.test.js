@@ -5,12 +5,12 @@ const request = require('supertest');
 const app = require('../app');
 
 // Describe the test set
-describe('GET menuitems endpoint', () => {
+describe('GET items endpoint', () => {
 
   // The test that is being done
   test('should return 200', (done) => {
     request(app)
-      .get('/api/menuitems')   // Endpoint that is being tested
+      .get('/api/items')   // Endpoint that is being tested
       .expect(200)          // Verify the expected result
       .end(done);           // Informing that the test is done
   },);
@@ -19,10 +19,10 @@ describe('GET menuitems endpoint', () => {
 
 
 
-describe('GET menuitem by id endpoint', () => {
+describe('GET item by id endpoint', () => {
   test('should return 200 if found', (done) => {
     request(app)
-      .get('/api/menuitems/1')
+      .get('/api/items/1')
       .expect(200)
       .end(done)
   });
@@ -30,7 +30,7 @@ describe('GET menuitem by id endpoint', () => {
 
   test('should return 200 and json if found', async () => {
     const response = await request(app)
-      .get('/api/menuitems/1')
+      .get('/api/items/1')
       .set('Accept', 'application/json');
     expect(response.status).toEqual(200);
     expect(response.headers['content-type']).toMatch(/json/);
@@ -46,7 +46,7 @@ describe('GET menuitem by id endpoint', () => {
 
   test('should return 404 and Not Found', async () => {
     const response = await request(app)
-      .get('/api/menuitems/101')
+      .get('/api/items/101')
       .set('Accept', 'application/json');
     expect(response.status).toEqual(404);
     expect(response.text).toContain('Not Found');
@@ -55,7 +55,7 @@ describe('GET menuitem by id endpoint', () => {
 
 
 
-describe('POST menuitem endpoint', () => {
+describe('POST item endpoint', () => {
 
   const loggedInUser = {
     userId: '',
@@ -82,8 +82,8 @@ describe('POST menuitem endpoint', () => {
     loggedInUser.token = response.body.token
   });
 
-  test('should create a new menuitem', async () => {
-    const menuitem = {
+  test('should create a new item', async () => {
+    const item = {
       name: 'Test food',
       price: '9000.00',
       description: 'Testscription haha',
@@ -91,11 +91,11 @@ describe('POST menuitem endpoint', () => {
     };
 
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'application/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(201);
     expect(response.headers['content-type']).toMatch(/json/);
@@ -106,26 +106,26 @@ describe('POST menuitem endpoint', () => {
 
 
   test('should not allow only price', async () => {
-    const menuitem = {
+    const item = {
       price: '9000.00',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
   });
 
   test('should not allow only name', async () => {
-    const menuitem = {
+    const item = {
       name: 'Test food',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
   });
 
@@ -134,92 +134,92 @@ describe('POST menuitem endpoint', () => {
 
 
   test('should not allow empty name', async () => {
-    const menuitem = {
+    const item = {
       name: '',
       price: '9000.00',
       description: 'Testscription haha',
       image: 'Testimage',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('{\"message\":\"\\\"name\\\" is not allowed to be empty\"}');
   });
 
   test('should not allow empty price', async () => {
-    const menuitem = {
+    const item = {
       name: 'Test food',
       price: '',
       description: 'Testscription haha',
       image: 'Testimage',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('{\"message\":\"\\\"price\\\" is not allowed to be empty\"}');
   });
 
 
   test('should not allow too short name', async () => {
-    const menuitem = {
+    const item = {
       name: 'T',
       price: '9000.00',
       description: 'Testscription haha',
       image: 'Testimage',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
     expect(response.text).toContain('{\"message\":\"\\\"name\\\" length must be at least 2 characters long\"}');
   });
 
   test('should not allow too short price', async () => {
-    const menuitem = {
+    const item = {
       name: 'Test food',
       price: '9.0',
       description: 'Testscription haha',
       image: 'Testimage',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
     console.log(response.body);
     expect(response.text).toContain('{\"message\":\"\\\"price\\\" length must be at least 4 characters long\"}');
   });
 
 
-  test('should not allow a duplicate menuitem', async () => {
-    const menuitem = {
+  test('should not allow a duplicate item', async () => {
+    const item = {
       name: 'Test food',
       price: '9000.00',
       description: 'Testscription haha',
       image: 'Testimage',
     };
     const response = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     expect(response.status).toEqual(400);
-    expect(response.text).toContain('MenuItem exist');
+    expect(response.text).toContain('Item exist');
   });
 
 
   const connection = require('../db/pool');
   afterAll(async () => {
-    const deleteQuery = `DELETE FROM menu WHERE name LIKE '%Test%';`;
+    const deleteQuery = `DELETE FROM items WHERE name LIKE '%Test%';`;
     await connection.query(deleteQuery)
       .then(([rows]) => {
         console.log("Response: ", rows);
@@ -230,8 +230,8 @@ describe('POST menuitem endpoint', () => {
   });
 },);
 
-// The PUT /api/menuitems endpoint tests
-describe('PUT menuitems endpoint', () => {
+// The PUT /api/items endpoint tests
+describe('PUT items endpoint', () => {
 
   const loggedInUser = {
     userId: '',
@@ -259,8 +259,8 @@ describe('PUT menuitems endpoint', () => {
   });
 
 
-  test('should update an existing menuitem', async () => {
-    const menuitem = {
+  test('should update an existing item', async () => {
+    const item = {
       id: 3,
       name: "souuup",
       price: "3.99",
@@ -269,11 +269,11 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(200);
     expect(response.headers['content-type']).toMatch(/json/);
@@ -282,8 +282,8 @@ describe('PUT menuitems endpoint', () => {
     expect(response.body.description).toEqual('Testscription haha');
   });
 
-  test('should not update a menuitem that doesnt exist', async () => {
-    const menuitem = {
+  test('should not update a item that doesnt exist', async () => {
+    const item = {
       id: 1003,
       name: "souuup",
       price: "3.99",
@@ -292,18 +292,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(404);
     expect(response.text).toEqual('Not Found');
   });
 
   test('should fail with string id', async () => {
-    const menuitem = {
+    const item = {
       id: "One",
       name: "souuup",
       price: "3.99",
@@ -312,18 +312,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"id\" must be a number" });
   });
 
   test('should fail if id not an integer', async () => {
-    const menuitem = {
+    const item = {
       id: 101.2,
       name: "souuup",
       price: "3.99",
@@ -332,18 +332,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"id\" must be an integer" });
   });
 
   test('should fail if id not an integer', async () => {
-    const menuitem = {
+    const item = {
       name: "souuup",
       price: "3.99",
       description: "Testscription haha",
@@ -351,18 +351,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"id\" is required" });
   });
 
   test('should fail if with empty name', async () => {
-    const menuitem = {
+    const item = {
       id: 3,
       name: "",
       price: "3.99",
@@ -371,18 +371,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"name\" is not allowed to be empty" });
   });
 
   test('should fail if no name', async () => {
-    const menuitem = {
+    const item = {
       id: 3,
       price: "3.99",
       description: "Testscription haha",
@@ -390,18 +390,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"name\" is required" });
   });
 
   test('should fail if with empty price', async () => {
-    const menuitem = {
+    const item = {
       id: 3,
       name: "souuup",
       price: "",
@@ -410,18 +410,18 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"price\" is not allowed to be empty" });
   });
 
   test('should fail if no price', async () => {
-    const menuitem = {
+    const item = {
       id: 3,
       name: "souuup",
       description: "Testscription haha",
@@ -429,11 +429,11 @@ describe('PUT menuitems endpoint', () => {
     };
 
     const response = await request(app)
-      .put('/api/menuitems')
+      .put('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
       .set('Content', 'appliction/json')
-      .send(menuitem);
+      .send(item);
 
     expect(response.status).toEqual(400);
     expect(response.body).toEqual({ "message": "\"price\" is required" });
@@ -441,7 +441,7 @@ describe('PUT menuitems endpoint', () => {
 
 });
 
-describe('DELETE menuitems endpoint', () => {
+describe('DELETE items endpoint', () => {
 
   const loggedInUser = {
     userId: '',
@@ -469,31 +469,31 @@ describe('DELETE menuitems endpoint', () => {
   });
 
 
-  test('should delete the menuitem by id', async () => {
-    const menuitem = {
+  test('should delete the item by id', async () => {
+    const item = {
       name: 'Test foods',
       price: '999.00',
       description: 'Testscription hahas',
       image: 'Testimages',
     };
     const postResponse = await request(app)
-      .post('/api/menuitems')
+      .post('/api/items')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token)
-      .send(menuitem);
+      .send(item);
     const postId = postResponse.body.id;
     const response = await request(app)
-      .delete(`/api/menuitems/${postId}`)
+      .delete(`/api/items/${postId}`)
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token);
     expect(response.status).toEqual(200);
-    expect(response.text).toEqual('MenuItem deleted');
+    expect(response.text).toEqual('Item deleted');
   });
 
 
-  test('should check that menuitem with id exists', async () => {
+  test('should check that item with id exists', async () => {
     const response = await request(app)
-      .delete('/api/menuitems/100001')
+      .delete('/api/items/100001')
       .set('Accept', 'application/json')
       .set('Authorization', 'BEARER ' + loggedInUser.token);
 

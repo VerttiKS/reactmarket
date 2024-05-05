@@ -1,10 +1,10 @@
 const pool = require('../db/pool');
-const menuitems = {
-  findMenuItems: async() => {
+const items = {
+  findItems: async() => {
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(
-        'SELECT * FROM `menu`'
+        'SELECT * FROM `items`'
       );
       connection.release();
       return results;
@@ -13,8 +13,8 @@ const menuitems = {
     }
   },
 
-  findMenuItemById: async (id) => {
-    const selectQuery = 'SELECT * FROM `menu` WHERE id=?;';
+  findItemById: async (id) => {
+    const selectQuery = 'SELECT * FROM `items` WHERE id=?;';
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(
@@ -27,11 +27,11 @@ const menuitems = {
     }
   }, 
 
-  createNewMenuItem: async (menuitem) => {
-    const insertQuery = 'INSERT INTO `menu` SET ?';
+  createNewItem: async (item) => {
+    const insertQuery = 'INSERT INTO `items` SET ?';
     try {
       const connection = await pool.getConnection();
-      const [results] = await connection.query(insertQuery, [menuitem]);
+      const [results] = await connection.query(insertQuery, [item]);
       connection.release();
       console.log(results);
       return results
@@ -41,11 +41,11 @@ const menuitems = {
   },
 
 
-  updateMenuItemById: async (menuitem) => {
-    const updateQuery = 'UPDATE `menu` SET `name` = ?, `price` = ?, `description` = ?, `image` = ? WHERE `id` = ?';
+  updateItemById: async (item) => {
+    const updateQuery = 'UPDATE `items` SET `name` = ?, `price` = ?, `description` = ?, `image` = ? WHERE `id` = ?';
     try {
       const connection = await pool.getConnection();
-      const [results] = await connection.query(updateQuery, [menuitem.name, menuitem.price, menuitem.description, menuitem.image, menuitem.id]);
+      const [results] = await connection.query(updateQuery, [item.name, item.price, item.description, item.image, item.id]);
       connection.release();
       console.log(results);
       return results
@@ -55,11 +55,11 @@ const menuitems = {
   },
 
 
-  findByMenuItem: async(menuitem) => {
+  findByItem: async(item) => {
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(
-        'SELECT * FROM `menu` WHERE name=? AND price=?', [menuitem.name, menuitem.price]
+        'SELECT * FROM `items` WHERE name=? AND price=?', [item.name, item.price]
       );
       connection.release();
       return results;
@@ -68,8 +68,8 @@ const menuitems = {
     }
   },
 
-  deleteMenuItemById: async (id) => {
-    const deleteQuery = 'DELETE FROM `menu` WHERE `id` = ?';
+  deleteItemById: async (id) => {
+    const deleteQuery = 'DELETE FROM `items` WHERE `id` = ?';
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(
@@ -84,4 +84,4 @@ const menuitems = {
   }
 }
 
-module.exports = menuitems;
+module.exports = items;

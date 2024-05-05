@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const menuitemsRouter = require('./routes/menuitems');
+const itemsRouter = require('./routes/items');
 const users = require('./routes/users');
 
 const app = express();
@@ -37,7 +37,7 @@ app.use(cors({
 }));
 
 
-app.use('/api/menuitems', menuitemsRouter);
+app.use('/api/items', itemsRouter);
 app.use('/api/users', users);
 
 module.exports = app;
