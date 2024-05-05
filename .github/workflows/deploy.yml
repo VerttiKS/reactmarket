@@ -17,9 +17,11 @@ jobs:
     name: Build Container Images
     timeout-minutes: 5
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
+    
     steps:
       - name: Fetch code
         uses: actions/checkout@v4.1.1
@@ -68,10 +70,13 @@ jobs:
 # Workflow for deploying the containers on the server
   deploy:
     name: Server Deployment
-    needs: build
-
-    # The type of runner that the job will run on
+    timeout-minutes: 5
     runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       # Fetch the code using the checkout action
       - name: Fetch Code

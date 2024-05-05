@@ -26,7 +26,7 @@ jobs:
       - name: Install MySQL server
         uses: shogo82148/actions-setup-mysql@v1.31.0
         with:
-          mysql-version: "8.0"
+          mysql-version: "8.3"
           auto-start: true
       
 
@@ -41,7 +41,7 @@ jobs:
       # use the cli client to see the database
       - name: Seed Database
         working-directory: ./db
-        run: mysql -h 127.0.0.1 -P 3306 -u root -ppassword test_db < init.sql
+        run: mysql -h 127.0.0.1 -P3306 -u root -ppassword test_db < init.sql
 
       
       # Create .env file for the test job
@@ -65,7 +65,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 5
     needs: test
 
     permissions:
