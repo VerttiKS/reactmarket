@@ -3,7 +3,7 @@ import './ProductListItem.css';
 const ProductListItemDetail = ({title, image, price, description, owner}) => {
 
 return (
-    <li className="product__list-item">
+    <li className="product__list-item-big">
       <div className="displayBig">
         <img className="product__list-item__image" src={image}></img>
         <section className='product__list-item__section'>

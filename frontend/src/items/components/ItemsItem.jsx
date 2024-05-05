@@ -2,7 +2,6 @@ import React, { useRef, useState, useContext } from "react";
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router'
 
-import Card from '../../shared/components/Card';
 import Button from "../../shared/components/Button";
 import Modal from "../../shared/components/Modal";
 import Input from "../../shared/components/Input";
@@ -40,9 +39,9 @@ const ItemsItem = props => {
     }
   })
 
-  const deleteConfirmedHandler = () => {
+  const deleteConfirmedHandler = async event => {
     setShowConfirmationModal(false);
-    deleteItemMutation.mutate({
+    await deleteItemMutation.mutate({
       id: props.id,
       token: auth.token
     })
@@ -52,7 +51,7 @@ const ItemsItem = props => {
     mutationFn: editItem,
     onSuccess: (data) => {
       console.log(data);
-      navigate('/edit');
+      navigate("/");
     },
     onError: (error) => {
       console.log(error)
@@ -60,6 +59,7 @@ const ItemsItem = props => {
   })
 
   const editConfirmedHandler = async event => {
+    setShowEditModal(false);
     event.preventDefault();
     editItemMutation.mutate({
       id: props.id,
@@ -109,26 +109,22 @@ const ItemsItem = props => {
       <p>Are you sure? Once it's gone, it's gone!</p>
     </Modal>
     {auth.isLoggedIn && auth.userName == props.owner && (
-    <li className="item-item">
-      <Card className="item-item__content">
-        <div className="item-item__image">
-          <img src={props.image} alt={props.title} />
-        </div>
-        <div className="item-item__info">
-          <h3>{props.title} - {props.price}</h3>
-        </div>
-        <div className="item-item_actions">
-
-        
-        
+    <li className="productItem__list-item">
+      <div className="productDisplay">
+        <img className="productItem__list-item__image" src={props.image}></img>
+        <section className='productItem__list-item__section'>
+          <h2>{props.title}</h2>
+        </section>
+      </div>
+      <div className="productDisplayButton">
             <Button edit onClick={showEditHandler}>Edit</Button>
           
    
             <Button danger onClick={showConfirmationHandler}>Delete</Button>
-
         </div>
-      </Card>
+
     </li>
+
     )}
   </>
   )

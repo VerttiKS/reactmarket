@@ -32,15 +32,10 @@ const MainNavigation = () => {
                             </Link>
                         </li>
                     )}
-                    <li className='li_nav_about'>
-                        <Link to="/auth">
-                            <img src={loginImage}></img>
-                        </Link>
-                    </li>
-                    {auth.isLoggedIn && (
+                    {!auth.isLoggedIn && (
                         <li className='li_nav_about'>
-                            <Link to="/users">
-                                <img src={groupImage}></img>
+                            <Link to="/auth">
+                                <img src={loginImage}></img>
                             </Link>
                         </li>
                     )}
@@ -55,13 +50,6 @@ const MainNavigation = () => {
                         <li className='li_nav_about'>
                             <Link to="/add">
                                 <img src={addImage}></img>
-                            </Link>
-                        </li>
-                    )}
-                    {auth.isLoggedIn && (
-                        <li className='li_nav_about'>
-                            <Link to="/cart">
-                                <img src={cartImage}></img>
                             </Link>
                         </li>
                     )}
